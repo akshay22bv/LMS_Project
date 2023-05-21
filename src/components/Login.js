@@ -7,6 +7,7 @@ import { useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { domain } from "../App";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Login = () => {
   // Form submission handler
   const handleSubmit = (values) => {
     console.log(values);
-    fetch("http://192.168.1.11:8800/api/auth/signin", {
+    fetch(`${domain}/api/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

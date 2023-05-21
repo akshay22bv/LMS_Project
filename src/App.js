@@ -7,6 +7,8 @@ import SignInPage from "./Views/SignInPage";
 import UsersPage from "./Views/UsersPage";
 // import VideoUploadCloudflare from "./Views/VideoUpload";
 
+export const domain = "http://192.168.1.10:8800";
+
 function App() {
   return (
     <div className="App">

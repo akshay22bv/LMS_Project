@@ -8,6 +8,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { domain } from "../App";
 const SignIn = () => {
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const SignIn = () => {
   const handleSubmit = (values) => {
     // console.log(values);
 
-    fetch("http://192.168.1.11:8800/api/auth/signup", {
+    fetch(`${domain}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

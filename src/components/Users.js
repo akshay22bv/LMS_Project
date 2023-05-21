@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button } from "@mui/material";
+import { domain } from "../App";
 
 export default function Users() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function Users() {
 
     console.log({ access_token });
 
-    fetch("http://192.168.1.11:8800/api/users", {
+    fetch(`${domain}/api/users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
