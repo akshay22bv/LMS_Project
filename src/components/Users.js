@@ -22,7 +22,7 @@ export default function Users() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${access_token}`,
+        Authorization: `Bearer ${access_token}`,
       },
     })
       .then((response) => response.json())

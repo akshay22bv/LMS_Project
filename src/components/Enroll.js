@@ -6,19 +6,76 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Enroll.css";
 import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import StripeCheckout from "react-stripe-checkout";
+import { domain } from "../App";
+import jwt_decode from "jwt-decode";
 
 const Enroll = () => {
+  const stripeKey =
+    "pk_test_51NA797SCph2ozb4wkRwoceS3kSxoq2RLJNHWCUcOLp7mKQawzH2yn8WgztjSmxe9nGx7fAUjmg6HwetafC2JFN8u00JusSJmUo";
   const handleSubscribe = () => {
     // Redirect or perform any action when the subscribe button is clicked
     window.open(
       "https://www.youtube.com/channel/CHANNEL_ID?sub_confirmation=1"
     );
   };
+
+  const [stripeToken, setStripeToken] = useState(null);
+  const onToken = (token) => {
+    console.log("TOKEN", token);
+    setStripeToken(token);
+  };
+  const [response, setResponse] = useState(null);
+
+  let access_token = localStorage.getItem("access_token");
+
+  const decodedToken = access_token && jwt_decode(access_token);
+  console.log({ decodedToken });
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await fetch(`${domain}/api/enroll/payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + access_token,
+          },
+          body: JSON.stringify({
+            amount: 100,
+          }),
+        });
+        console.log("PAYMENT_RENPONSE", res);
+        setResponse(res.data);
+        if (res.status === 200) {
+          console.log({ res });
+          let userId = decodedToken && decodedToken._id;
+          const enroll = await fetch(`${domain}/api/users/enroll/${userId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + access_token,
+            },
+            body: JSON.stringify({
+              enrolled: true,
+            }),
+          });
+
+          console.log("ENROLL_RENPONSE", enroll);
+        }
+      } catch (err) {
+        console.log("ERR", err);
+        setResponse(err.response.data);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken]);
+
   return (
     <Grid container lg={12} md={12} sm={12} style={{ background: "#edeccc" }}>
       {/* <Grid item lg={12} md={12} sm={12}>
@@ -84,12 +141,25 @@ const Enroll = () => {
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Grid item lg={3} sm={3} md={3}>
-              <Button
-                className="enroll-btn"
-                style={{ width: "100%", color: "white", borderRadius: 20 }}
+              <StripeCheckout
+                name="LMS Tutorials"
+                image=""
+                billingAddress
+                shippingAddress
+                description="Your total amount is 1 Rupee"
+                amount={100}
+                token={onToken}
+                stripeKey={stripeKey}
+                currency="INR"
+                locale="in"
               >
-                Enroll Now
-              </Button>
+                <Button
+                  className="enroll-btn"
+                  style={{ width: "100%", color: "white", borderRadius: 20 }}
+                >
+                  Enroll Now
+                </Button>
+              </StripeCheckout>
             </Grid>
           </Grid>
           <br /> <br />

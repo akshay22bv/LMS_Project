@@ -14,7 +14,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import app from "../firebase";
+import app from "./Firebase";
 
 const Input = styled.input`
   border: 1px solid lightgrey;
@@ -179,14 +179,11 @@ function VideoUploadCloudflare() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
+
           <Button
             onClick={handleUpload}
-            autoFocus
-            disabled={
-              videoPerc > 0 || videoPerc < 100 || imgPerc > 0 || imgPerc < 100
-                ? true
-                : false
-            }
+            // autoFocus
+            // disabled={imgPerc === 100 ? false : true}
           >
             Upload
           </Button>
