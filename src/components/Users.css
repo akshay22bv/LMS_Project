@@ -1,0 +1,27 @@
+.datagrid-container {
+  height: 100vh;
+  width: 60%;
+}
+
+.datagrid-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100; */
+}
+
+/* Example of custom colors for the DataGrid */
+
+.custom-datagrid .MuiDataGrid-colCellTitle {
+  background-color: #ff2727; /* Header background color */
+  color: #333; /* Header text color */
+}
+
+.custom-datagrid .MuiDataGrid-cell {
+  background-color: #fff; /* Cell background color */
+  color: #333; /* Cell text color */
+}
+
+.custom-datagrid .Mui-selected {
+  background-color: #e0e0e0; /* Selected row background color */
+}
