@@ -9,7 +9,7 @@ import VideosPage from "./Views/VideosPage";
 import VideoUploadCloudflare from "./Views/VideoUpload";
 // import VideoUploadCloudflare from "./Views/VideoUpload";
 
-export const domain = "http://192.168.1.7:8800";
+export const domain = "http://192.168.1.49:8800";
 
 function App() {
   return (

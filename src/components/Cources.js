@@ -51,7 +51,7 @@ const Cources = () => {
     const tokenFromLocalStorage = localStorage.getItem("access_token");
     console.log("callllllllllles", tokenFromLocalStorage);
 
-    access_token && fetchVideos();
+    fetchVideos();
   }, [localStorage.getItem("access_token")]);
 
   console.log({ videos });
